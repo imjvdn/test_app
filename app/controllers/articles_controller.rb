@@ -68,3 +68,16 @@ class ArticlesController < ApplicationController
       params.require(:article).permit(:title, :description)
     end
 end
+
+# This is the timestamp
+def index
+  @articles = Article.order(created_at: :desc)
+end
+# search functionality
+def index
+  if params[:search]
+    @articles = Article.where("title LIKE ?", "%#{params[:search]}%")
+  else
+    @articles = Article.all
+  end
+end

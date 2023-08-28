@@ -1,9 +1,59 @@
+<head>
+  <title>Test App</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+  <!-- Link to Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#search-input').on('input', function() {
+        var searchValue = $(this).val().toLowerCase();
+
+        $('.article-card').each(function() {
+          var articleTitle = $(this).find('.card-title').text().toLowerCase();
+          if (articleTitle.includes(searchValue)) {
+            $(this).fadeIn('slow');
+          } else {
+            $(this).fadeOut('slow');
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <!-- Your existing content goes here -->
+<<style>
+  .timestamp {
+    font-size: 0.8em;
+    opacity: 0.7;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 8px;
+  }
+</style>
+
 <p style="color: green"><%= notice %></p>
 
 <div class="container">
   <h1 class="text-center">Articles</h1>
 
-  <div class="row">
+  <form class="form-inline mb-3" id="search-form">
+    <div class="input-group">
+      <input id="search-input" class="form-control" type="search" placeholder="Search" aria-label="Search">
+      <div class="input-group-append">
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="row" id="article-list">
     <% @articles.each do |article| %>
       <div class="col-md-4 mb-4">
         <div class="card">
@@ -11,6 +61,7 @@
             <h4 class="card-title"><%= article.title %></h4>
             <p class="card-text"><%= article.description %></p>
             <%= link_to "Show this article", article, class: "btn btn-primary" %>
+            <p class="timestamp"><%= article.created_at.strftime("%b %d, %Y") %></p>
           </div>
         </div>
       </div>
@@ -21,3 +72,22 @@
     <%= link_to "New article", new_article_path, class: "btn btn-success" %>
   </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#search-form').on('submit', function(e) {
+      e.preventDefault();
+      const searchValue = $('#search-input').val().toLowerCase().trim();
+      $('#article-list .card').each(function() {
+        const cardTitle = $(this).find('.card-title').text().toLowerCase();
+        if (cardTitle.includes(searchValue)) {
+          $(this).fadeIn();
+        } else {
+          $(this).fadeOut();
+        }
+      });
+    });
+  });
+</script>
+</body>

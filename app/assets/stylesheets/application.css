@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+
+ .timestamp {
+    color: #888;
+    font-size: 12px;
+    text-align: right;
+  }
+  
