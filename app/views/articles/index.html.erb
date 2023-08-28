@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html>
 <head>
   <title>Test App</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -8,7 +10,10 @@
   <!-- Link to Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Include Sortable.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+
+  <!-- Your jQuery script for article filtering -->
   <script>
     $(document).ready(function() {
       $('#search-input').on('input', function() {
@@ -27,8 +32,7 @@
   </script>
 </head>
 <body>
-  <!-- Your existing content goes here -->
-<<style>
+<style>
   .timestamp {
     font-size: 0.8em;
     opacity: 0.7;
@@ -38,7 +42,6 @@
     margin: 8px;
   }
 </style>
-
 <p style="color: green"><%= notice %></p>
 
 <div class="container">
@@ -53,9 +56,10 @@
     </div>
   </form>
 
-  <div class="row" id="article-list">
+  <!-- Add the sortable-list class to the article list container -->
+  <div class="row sortable-list" id="article-list">
     <% @articles.each do |article| %>
-      <div class="col-md-4 mb-4">
+      <div class="col-md-4 mb-4 article-card">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title"><%= article.title %></h4>
@@ -73,21 +77,13 @@
   </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Initialize Sortable.js for reordering articles -->
 <script>
-  $(document).ready(function() {
-    $('#search-form').on('submit', function(e) {
-      e.preventDefault();
-      const searchValue = $('#search-input').val().toLowerCase().trim();
-      $('#article-list .card').each(function() {
-        const cardTitle = $(this).find('.card-title').text().toLowerCase();
-        if (cardTitle.includes(searchValue)) {
-          $(this).fadeIn();
-        } else {
-          $(this).fadeOut();
-        }
-      });
-    });
+  const sortableList = document.getElementById('article-list');
+  new Sortable(sortableList, {
+    animation: 150, // Animation duration in milliseconds
   });
 </script>
+
 </body>
+</html>
