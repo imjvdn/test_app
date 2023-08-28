@@ -3,5 +3,6 @@ class PagesController < ApplicationController
     end
 
     def about
-    end
+        @message = "Welcome to our About Page!"
+      end
 end
