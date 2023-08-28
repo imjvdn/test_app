@@ -9,4 +9,5 @@ Rails.application.routes.draw do
 
   # This is the route for the articles controller
   resources :articles
+
 end
