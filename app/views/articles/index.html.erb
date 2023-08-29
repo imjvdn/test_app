@@ -1,24 +1,40 @@
+<!DOCTYPE html>
+<html>
 <head>
+  <!-- Set the title of the webpage -->
   <title>Test App</title>
+  <!-- Configure the viewport for responsive design -->
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- Include meta tags for Cross-Site Scripting (XSS) prevention -->
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
+  <!-- Include the application's main stylesheet with TurboTrack reload -->
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <!-- Include JavaScript import map tags -->
   <%= javascript_importmap_tags %>
-  <!-- Link to Bootstrap CSS -->
+  <!-- Link to Bootstrap CSS from a CDN -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+  <!-- Include jQuery library from a CDN -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
+    // Execute when the DOM is fully loaded
     $(document).ready(function() {
+      // Bind an event listener to input changes in the search input
       $('#search-input').on('input', function() {
+        // Get the lowercase value of the search input
         var searchValue = $(this).val().toLowerCase();
 
+        // Loop through each article card element
         $('.article-card').each(function() {
+          // Get the lowercase article title within the card
           var articleTitle = $(this).find('.card-title').text().toLowerCase();
+          // Check if the article title includes the search value
           if (articleTitle.includes(searchValue)) {
+            // Smoothly fade in the card if the title matches the search
             $(this).fadeIn('slow');
           } else {
+            // Smoothly fade out the card if the title doesn't match the search
             $(this).fadeOut('slow');
           }
         });
@@ -27,6 +43,7 @@
   </script>
 </head>
 <body>
+<!-- Inline CSS for timestamp styling -->
 <style>
   .timestamp {
     font-size: 0.8em;
@@ -37,28 +54,40 @@
     margin: 8px;
   }
 </style>
+<!-- Display notices in green color -->
 <p style="color: green"><%= notice %></p>
 
+<!-- Main content container -->
 <div class="container">
+  <!-- Main heading -->
   <h1 class="text-center">Articles</h1>
 
+  <!-- Search form -->
   <form class="form-inline mb-3" id="search-form">
     <div class="input-group">
+      <!-- Search input -->
       <input id="search-input" class="form-control" type="search" placeholder="Search" aria-label="Search">
       <div class="input-group-append">
+        <!-- Search button -->
         <button class="btn btn-outline-primary" type="submit">Search</button>
       </div>
     </div>
   </form>
 
+  <!-- Container for article cards -->
   <div class="row" id="article-list">
+    <!-- Loop through each article and create a card -->
     <% @articles.each do |article| %>
-      <div class="col-md-4 mb-4">
+      <div class="col-md-4 mb-4 article-card">
         <div class="card">
           <div class="card-body">
+            <!-- Display article title -->
             <h4 class="card-title"><%= article.title %></h4>
+            <!-- Display article description -->
             <p class="card-text"><%= article.description %></p>
+            <!-- Link to view article details -->
             <%= link_to "Show this article", article, class: "btn btn-primary" %>
+            <!-- Display article timestamp -->
             <p class="timestamp"><%= article.created_at.strftime("%b %d, %Y") %></p>
           </div>
         </div>
@@ -66,27 +95,37 @@
     <% end %>
   </div>
 
+  <!-- Button to create a new article -->
   <div class="text-center">
     <%= link_to "New article", new_article_path, class: "btn btn-success" %>
   </div>
 </div>
 
+<!-- Include jQuery library again for script usage -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+  // Execute when the DOM is fully loaded
   $(document).ready(function() {
+    // Bind an event listener to form submission
     $('#search-form').on('submit', function(e) {
       e.preventDefault();
+      // Get the lowercase trimmed search value
       const searchValue = $('#search-input').val().toLowerCase().trim();
-      $('#article-list .card').each(function() {
+      // Loop through each article card element
+      $('#article-list .article-card').each(function() {
+        // Get the lowercase card title
         const cardTitle = $(this).find('.card-title').text().toLowerCase();
+        // Check if the card title includes the search value
         if (cardTitle.includes(searchValue)) {
+          // Smoothly fade in the card if the title matches the search
           $(this).fadeIn();
         } else {
+          // Smoothly fade out the card if the title doesn't match the search
           $(this).fadeOut();
         }
       });
     });
   });
 </script>
-
 </body>
+</html>
