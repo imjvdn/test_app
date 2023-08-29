@@ -4,7 +4,7 @@
 <div class="container">
   <h1>New Article</h1>
 
-  <%= form_with(model: @article, url: articles_path, local: true) do |form| %>
+  <%= form_with(model: @article, url: articles_path) do |form| %>
     <div class="form-group">
       <%= form.label :title %>
       <%= form.text_field :title, class: 'form-control' %>

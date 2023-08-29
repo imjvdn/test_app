@@ -3,7 +3,11 @@ class ArticlesController < ApplicationController
 
   # GET /articles or /articles.json
   def index
-    @articles = Article.all
+    if params[:search]
+      @articles = Article.where("title LIKE ?", "%#{params[:search]}%")
+    else
+      @articles = Article.order(created_at: :desc)
+    end
   end
 
   # GET /articles/1 or /articles/1.json
@@ -67,17 +71,4 @@ class ArticlesController < ApplicationController
     def article_params
       params.require(:article).permit(:title, :description)
     end
-end
-
-# This is the timestamp
-def index
-  @articles = Article.order(created_at: :desc)
-end
-# search functionality
-def index
-  if params[:search]
-    @articles = Article.where("title LIKE ?", "%#{params[:search]}%")
-  else
-    @articles = Article.all
-  end
 end
