@@ -88,7 +88,8 @@
             <!-- Link to view article details -->
             <%= link_to "Show this article", article, class: "btn btn-primary" %>
             <!-- Display article timestamp -->
-            <p class="timestamp"><%= article.created_at.strftime("%b %d, %Y") %></p>
+            <p class="timestamp"><%= article.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%b %d, %Y") %></p>
+
           </div>
         </div>
       </div>
