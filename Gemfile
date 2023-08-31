@@ -46,6 +46,24 @@ gem "bootsnap", require: false
 # Use Sass to process CSS
 # gem "sassc-rails"
 
+gem 'devise'
+gem 'omniauth-auth0'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-github'
+gem 'omniauth-twitter'
+gem 'omniauth-linkedin-oauth2'  
+gem 'omniauth-instagram'
+gem 'omniauth-tumblr'
+gem 'omniauth-yahoo-oauth2'
+gem 'omniauth-amazon'
+gem 'omniauth-dropbox-oauth2'
+gem 'omniauth-heroku'
+
+gem 'bcrypt', '~> 3.1.7'
+
+
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 

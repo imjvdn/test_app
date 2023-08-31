@@ -1,0 +1,27 @@
+<h1>Create an Account</h1>
+
+<%= form_with model: @user, url: users_path do |form| %>
+  <!-- Error messages -->
+  <% if @user.errors.any? %>
+    <div>
+      <h2>Errors:</h2>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Form Fields -->
+  <%= form.label :email %>
+  <%= form.email_field :email %><br/>
+
+  <%= form.label :username %>
+  <%= form.text_field :username %><br/>
+
+  <%= form.label :password %>
+  <%= form.password_field :password %><br/>
+
+  <%= form.submit "Create Account" %>
+<% end %>
