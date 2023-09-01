@@ -54,8 +54,16 @@
   </script>
 </head>
 <body>
-  
-  <p style="color: green"><%= notice %></p>
+    <% if notice %>
+  <div class="row justify-content-center" style="margin-top: 20px;">
+    <div class="col-md-8">
+      <div class="alert alert-success" role="alert">
+        <strong>Success!</strong> <%= notice %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
   
   <div class="container">
     <h1 class="text-center">Articles</h1>
