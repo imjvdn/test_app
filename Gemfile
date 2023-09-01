@@ -62,6 +62,10 @@ gem 'omniauth-heroku'
 
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'will_paginate', '~> 4.0'
+
+
+
 
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
@@ -95,3 +99,4 @@ end
 group :production do
   gem 'pg'
 end
+

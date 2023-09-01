@@ -1,5 +1,9 @@
 <div class="container">
-  <p style="color: green;"><%= notice %></p>
+  <% if notice %>
+  <div class="alert alert-success" role="alert" style="margin-top: 20px;">
+    <strong>Success!</strong> <%= notice %>
+  </div>
+<% end %>
   
   <%= render @article %>
 
