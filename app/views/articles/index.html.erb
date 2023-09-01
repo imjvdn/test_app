@@ -15,6 +15,24 @@
   <!-- Link to Bootstrap CSS from a CDN -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+  <!-- Inline CSS for timestamp styling and text truncation -->
+  <style>
+    .timestamp {
+      font-size: 0.8em;
+      opacity: 0.7;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin: 8px;
+    }
+    .truncate {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+  </style>
+
   <!-- Include jQuery library from a CDN -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
@@ -24,7 +42,6 @@
       $('#search-input').on('input', function() {
         // Get the lowercase value of the search input
         var searchValue = $(this).val().toLowerCase();
-
         // Loop through each article card element
         $('.article-card').each(function() {
           // Get the lowercase article title within the card
@@ -43,89 +60,77 @@
   </script>
 </head>
 <body>
-<!-- Inline CSS for timestamp styling -->
-<style>
-  .timestamp {
-    font-size: 0.8em;
-    opacity: 0.7;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin: 8px;
-  }
-</style>
-<!-- Display notices in green color -->
-<p style="color: green"><%= notice %></p>
+  <!-- Display notices in green color -->
+  <p style="color: green"><%= notice %></p>
 
-<!-- Main content container -->
-<div class="container">
-  <!-- Main heading -->
-  <h1 class="text-center">Articles</h1>
+  <!-- Main content container -->
+  <div class="container">
+    <!-- Main heading -->
+    <h1 class="text-center">Articles</h1>
 
-  <!-- Create flexbox container to align search and new article button -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <!-- Button to create a new article -->
-    <%= link_to "New article", new_article_path, class: "btn btn-success" %>
-    
-    <!-- Search form -->
-    <form class="form-inline" id="search-form">
-      <div class="input-group">
-        <input id="search-input" class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-outline-primary" type="submit">Search</button>
-        </div>
-      </div>
-    </form>
-  </div>
+    <!-- Create flexbox container to align search and new article button -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <!-- Button to create a new article -->
+      <%= link_to "New article", new_article_path, class: "btn btn-success" %>
 
-
-  <!-- Container for article cards -->
-  <div class="row" id="article-list">
-    <!-- Loop through each article and create a card -->
-    <% @articles.each do |article| %>
-      <div class="col-md-4 mb-4 article-card">
-        <div class="card">
-          <div class="card-body">
-            <!-- Display article title -->
-            <h4 class="card-title"><%= article.title %></h4>
-            <!-- Display article description -->
-            <p class="card-text"><%= article.description %></p>
-            <!-- Link to view article details -->
-            <%= link_to "Show this article", article, class: "btn btn-primary" %>
-            <!-- Display article timestamp -->
-            <p class="timestamp"><%= article.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%b %d, %Y") %></p>
-
+      <!-- Search form -->
+      <form class="form-inline" id="search-form">
+        <div class="input-group">
+          <input id="search-input" class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-outline-primary" type="submit">Search</button>
           </div>
         </div>
-      </div>
-    <% end %>
+      </form>
+    </div>
+
+    <!-- Container for article cards -->
+    <div class="row" id="article-list">
+      <!-- Loop through each article and create a card -->
+      <% @articles.each do |article| %>
+        <div class="col-md-4 mb-4 article-card">
+          <div class="card">
+            <div class="card-body">
+              <!-- Display article title -->
+              <h4 class="card-title"><%= article.title %></h4>
+              <!-- Display truncated article description -->
+              <p class="card-text truncate"><%= article.description %></p>
+              <!-- Link to view article details -->
+              <%= link_to "Show this article", article, class: "btn btn-primary" %>
+              <!-- Display article timestamp -->
+              <p class="timestamp"><%= article.created_at.in_time_zone('Pacific Time (US & Canada)').strftime("%b %d, %Y") %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
 
-<!-- Include jQuery library again for script usage -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-  // Execute when the DOM is fully loaded
-  $(document).ready(function() {
-    // Bind an event listener to form submission
-    $('#search-form').on('submit', function(e) {
-      e.preventDefault();
-      // Get the lowercase trimmed search value
-      const searchValue = $('#search-input').val().toLowerCase().trim();
-      // Loop through each article card element
-      $('#article-list .article-card').each(function() {
-        // Get the lowercase card title
-        const cardTitle = $(this).find('.card-title').text().toLowerCase();
-        // Check if the card title includes the search value
-        if (cardTitle.includes(searchValue)) {
-          // Smoothly fade in the card if the title matches the search
-          $(this).fadeIn();
-        } else {
-          // Smoothly fade out the card if the title doesn't match the search
-          $(this).fadeOut();
-        }
+  <!-- Include jQuery library again for script usage -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // Execute when the DOM is fully loaded
+    $(document).ready(function() {
+      // Bind an event listener to form submission
+      $('#search-form').on('submit', function(e) {
+        e.preventDefault();
+        // Get the lowercase trimmed search value
+        const searchValue = $('#search-input').val().toLowerCase().trim();
+        // Loop through each article card element
+        $('#article-list .article-card').each(function() {
+          // Get the lowercase card title
+          const cardTitle = $(this).find('.card-title').text().toLowerCase();
+          // Check if the card title includes the search value
+          if (cardTitle.includes(searchValue)) {
+            // Smoothly fade in the card if the title matches the search
+            $(this).fadeIn();
+          } else {
+            // Smoothly fade out the card if the title doesn't match the search
+            $(this).fadeOut();
+          }
+        });
       });
     });
-  });
-</script>
+  </script>
 </body>
 </html>
