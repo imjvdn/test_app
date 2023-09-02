@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'users/new'
-  get 'users/create'
   # Pages
   root 'pages#home'
   get 'about', to: 'pages#about'
