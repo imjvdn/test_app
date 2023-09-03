@@ -1,10 +1,9 @@
 class ArticlesController < ApplicationController
-  # Include the authentication check
+  # Commented out to disable user authentication
   # before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+
   # Existing before_action to set the article
   before_action :set_article, only: %i[show edit update destroy]
-
-  # ... (rest of your code)
 
   # Existing index method
   def index
@@ -28,9 +27,14 @@ class ArticlesController < ApplicationController
   def edit
   end
 
-  # Existing create method
+  # Modified create method
   def create
-    @article = current_user.articles.build(article_params)
+    # Commented out to remove dependency on current_user
+    # @article = current_user.articles.build(article_params)
+
+    # Added this line to create a new article directly
+    @article = Article.new(article_params)
+    
     if @article.save
       redirect_to article_url(@article), notice: "Article was successfully created."
     else
