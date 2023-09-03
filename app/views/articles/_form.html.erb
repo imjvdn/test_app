@@ -22,6 +22,6 @@
   </div>
 
   <div class="form-group">
-    <%= form.submit "Create Article", class: "btn btn-primary" %>
+    <%= form.submit article.new_record? ? 'Create Article' : 'Update Article', class: 'btn btn-primary' %>
   </div>
 <% end %>

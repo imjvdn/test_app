@@ -5,14 +5,13 @@
   </div>
 <% end %>
 
-
 <div class="container">
   <h1>New Article</h1>
 
   <%= form_with(model: @article, url: articles_path) do |form| %>
       <% if @article.errors.any? %>
-        <div class="alert alert-danger">
-          <ul>
+        <div class="alert alert-danger mb-3" style="padding: 10px; margin-bottom: 10px;">
+          <ul class="mb-0">
             <% @article.errors.full_messages.each do |message| %>
               <li><%= message %></li>
             <% end %>
@@ -36,3 +35,4 @@
 
   <%= link_to 'Back', articles_path, class: 'btn btn-secondary' %>
 </div>
+
