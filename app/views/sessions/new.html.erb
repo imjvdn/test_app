@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
-
   <title>test_app</title>
 
   <!-- Bootstrap core CSS -->
@@ -37,41 +35,41 @@
     .form-control:focus {
       z-index: 2;
     }
+    .small-button {
+      width: 100px;  /* Set the width */
+      height: 40px;  /* Set the height */
+    }
+    /* Custom CSS to reduce spacing between buttons */
     .button-container {
       display: flex;
       justify-content: space-between;
-      margin-top: 15px;
-    }
-    .small-button {
-      flex: 1;
-      margin-right: 5px;
     }
   </style>
 </head>
-
 <body class="text-center">
   <div class="container">
     <div class="form-container">
-      <form class="form-signin">
-        <%# <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
-          <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
-        </svg> %>
-        <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox mb-3">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        <div class="button-container">
-          <button class="btn btn-primary small-button" type="submit">Sign in</button> <!-- Smaller button -->
-        <button class="btn btn-secondary small-button" type="button" onclick="window.location.href='/users/new'">Sign up</button>
-        </div>
-        <p class="mt-5 mb-3 text-muted text-small">&copy; Jadan Morrow</p>
-      </form>
+      <%= form_with(url: login_path, local: true, class: 'form-signin') do |form| %>
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        
+        <%= form.label :username, 'Username', class: 'sr-only' %>
+        <%= form.text_field :username, class: 'form-control', placeholder: 'Username', required: true, autofocus: true %>
+        
+        <%= form.label :password, 'Password', class: 'sr-only' %>
+        <%= form.password_field :password, class: 'form-control', placeholder: 'Password', required: true %>
+        
+     <div class="button-container d-flex justify-content-center">
+  <%= form.submit 'Sign in', class: 'btn btn-primary mr-2' %>
+  <button class="btn btn-secondary" type="button" onclick="window.location.href='/users/new'">Sign up</button>
+</div>
+
+
+
+
+
+
+      <% end %>
+      <p class="mt-5 mb-3 text-muted text-small">&copy; Jadan Morrow</p>
     </div>
   </div>
 </body>

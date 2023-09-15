@@ -1,28 +1,24 @@
-<!-- app/views/layouts/application.html.erb -->
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Test App</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Test App</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+  <%= stylesheet_link_tag "application" %>
+  <%= javascript_include_tag "application" %>
 
-    <!-- Link to Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Include Bootstrap and jQuery from CDNs -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <!-- Include jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <style>
-      /* Add the alert-success styling here */
-      .alert-success {
-        background-color: #d4edda; /* Green background color */
-        border-color: #c3e6cb; /* Green border color */
-        color: #155724; /* Dark green text color */
-      }
+  <style>
+    /* Add the alert-success styling here */
+    .alert-success {
+      background-color: #d4edda; /* Green background color */
+      border-color: #c3e6cb; /* Green border color */
+      color: #155724; /* Dark green text color */
     </style>
   </head>
   <body>
@@ -51,11 +47,25 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <%= link_to 'Login', login_path, class: 'nav-link' %>
+            <!-- Check if the user is logged in, and display the appropriate link -->
+            <% if current_user %>
+              <%= link_to 'Sign out', logout_path, method: :delete, class: 'nav-link', data: { confirm: 'Are you sure you want to log out?' } %>
+            <% else %>
+              <%= link_to 'Sign in', login_path, class: 'nav-link' %>
+            <% end %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Signup', new_user_path, class: 'nav-link' %>
+            <!-- Display the Signup link only if the user is not logged in -->
+            <% unless current_user %>
+              <%= link_to 'Sign up', new_user_path, class: 'nav-link' %>
+            <% end %>
           </li>
+          <!-- Display the user's name if they are logged in -->
+          <% if current_user %>
+            <li class="nav-item">
+              <span class="nav-link">Welcome, <%= current_user.username %></span>
+            </li>
+          <% end %>
         </ul>
       </div>
     </nav>
@@ -63,7 +73,7 @@
     <!-- Flash message -->
     <div class="container">
       <% flash.each do |key, value| %>
-        <% if key == :notice %>
+        <% if key == :notice || key == :alert || key == :error %>
           <div class="alert alert-success alert-dismissible fade show" role="alert">
             <%= value %>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
