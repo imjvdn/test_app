@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  # Root route (redirect to sign-in page)
+  root 'sessions#new'
+
   # Pages
-  root 'pages#home'
   get 'about', to: 'pages#about'
 
   # Sessions
