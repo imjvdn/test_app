@@ -29,12 +29,8 @@ class ArticlesController < ApplicationController
 
   # Modified create method
   def create
-    # Commented out to remove dependency on current_user
-    # @article = current_user.articles.build(article_params)
-
-    # Added this line to create a new article directly
-    @article = Article.new(article_params)
-    
+    @article = current_user.articles.build(article_params)
+  
     if @article.save
       redirect_to article_url(@article), notice: "Article was successfully created."
     else

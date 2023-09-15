@@ -24,11 +24,18 @@
       text-overflow: ellipsis;
       max-width: 100%;
     }
+    .username {
+      font-size: 0.8em;
+      opacity: 0.7;
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 8px;
+    }
     /* Center align the pagination links */
     .pagination-wrapper {
       text-align: center;
     }
-
   </style>
   
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -54,17 +61,16 @@
   </script>
 </head>
 <body>
-    <% if notice %>
-  <div class="row justify-content-center" style="margin-top: 20px;">
-    <div class="col-md-8">
-      <div class="alert alert-success" role="alert">
-        <strong>Success!</strong> <%= notice %>
+  <% if notice %>
+    <div class="row justify-content-center" style="margin-top: 20px;">
+      <div class="col-md-8">
+        <div class="alert alert-success" role="alert">
+          <strong>Success!</strong> <%= notice %>
+        </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 
-  
   <div class="container">
     <h1 class="text-center">Articles</h1>
     
@@ -101,11 +107,16 @@
                   <%= time_diff_in_minutes %> minutes ago
                 <% end %>
               </p>
+              <!-- Display the username here if a user is associated with the article -->
+              <% if article.user.present? %>
+                <p class="username">
+                  by <%= article.user.username %>
+                </p>
+              <% end %>
             </div>
           </div>
         </div>
       <% end %>
-    </div>
     </div>
   </div>
 </body>
