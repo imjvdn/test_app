@@ -12,6 +12,10 @@
   <!-- Include Bootstrap and jQuery from CDNs -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Include Popper.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <!-- Include Bootstrap's JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
   <style>
     /* Add the alert-success styling here */
@@ -19,80 +23,79 @@
       background-color: #d4edda; /* Green background color */
       border-color: #c3e6cb; /* Green border color */
       color: #155724; /* Dark green text color */
-    </style>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <% unless current_page?(login_path) || current_page?(new_user_path) %>
-        <a class="navbar-brand" href="#">test_app</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <%= link_to 'Home', root_path, class: 'nav-link' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'About', about_path, class: 'nav-link' %>
-            </li>
-            <li class="nav-item">
-              <%= link_to 'Articles', articles_path, class: 'nav-link' %>
-            </li>
-          </ul>
-        </div>
-      <% end %>
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <% unless current_page?(login_path) || current_page?(new_user_path) %>
+      <a class="navbar-brand" href="#">test_app</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <!-- Check if the user is logged in, and display the appropriate link -->
-            <% if current_user %>
-              <%= link_to 'Sign out', logout_path, method: :delete, class: 'nav-link', data: { confirm: 'Are you sure you want to log out?' } %>
-            <% else %>
-              <%= link_to 'Sign in', login_path, class: 'nav-link' %>
-            <% end %>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <%= link_to 'Home', root_path, class: 'nav-link' %>
           </li>
           <li class="nav-item">
-            <!-- Display the Signup link only if the user is not logged in -->
-            <% unless current_user %>
-              <%= link_to 'Sign up', new_user_path, class: 'nav-link' %>
-            <% end %>
+            <%= link_to 'About', about_path, class: 'nav-link' %>
           </li>
-          <!-- Display the user's name if they are logged in -->
-          <% if current_user %>
-            <li class="nav-item">
-              <span class="nav-link">Welcome, <%= current_user.username %></span>
-            </li>
-          <% end %>
+          <li class="nav-item">
+            <%= link_to 'Articles', articles_path, class: 'nav-link' %>
+          </li>
         </ul>
       </div>
-    </nav>
+    <% end %>
 
-    <!-- Flash message -->
-    <div class="container">
-      <% flash.each do |key, value| %>
-        <% if key == :notice || key == :alert || key == :error %>
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <%= value %>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <% if current_user %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Welcome, <%= current_user.username %>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <%= link_to 'Profile', '#', class: 'dropdown-item' %>
+              <%= link_to 'Sign out', logout_path, method: :delete, class: 'dropdown-item', data: { confirm: 'Are you sure you want to log out?' } %>
+            </div>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to 'Sign in', login_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Sign up', new_user_path, class: 'nav-link' %>
+          </li>
         <% end %>
-      <% end %>
+      </ul>
     </div>
+  </nav>
 
-    <%= yield %>
+  <!-- Flash message -->
+  <div class="container">
+    <% flash.each do |key, value| %>
+      <% if key == :notice || key == :alert || key == :error %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <%= value %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 
-    <!-- Script to fade out flash message -->
-    <script>
-      $(document).ready(function() {
-        $(".alert").fadeTo(4000, 500).slideUp(500, function(){
-          $(".alert").slideUp(500);
-        });
+  <%= yield %>
+
+  <!-- Script to fade out flash message -->
+  <script>
+    $(document).ready(function() {
+      $(".alert").fadeTo(4000, 500).slideUp(500, function(){
+        $(".alert").slideUp(500);
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
 </html>

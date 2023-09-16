@@ -1,8 +1,4 @@
 class ArticlesController < ApplicationController
-  # Commented out to disable user authentication
-  # before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-
-  # Existing before_action to set the article
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_article, only: %i[show edit update destroy]
 
@@ -63,12 +59,18 @@ class ArticlesController < ApplicationController
 
   private
 
-  # Existing private methods
   def set_article
     @article = Article.find(params[:id])
   end
 
   def article_params
     params.require(:article).permit(:title, :description)
+  end
+
+  # Added authenticate_user! method
+  def authenticate_user!
+    unless session[:user_id]
+      redirect_to login_path, alert: 'You must be logged in to access this section'
+    end
   end
 end

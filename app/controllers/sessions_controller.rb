@@ -1,6 +1,6 @@
-# app/controllers/sessions_controller.rb
-
 class SessionsController < ApplicationController
+  skip_before_action :require_user, only: [:new, :create] # <-- Added this line
+  
   def new
     # render login form
   end
@@ -21,4 +21,3 @@ class SessionsController < ApplicationController
     redirect_to login_path, notice: "Logged out successfully"
   end
 end
-
