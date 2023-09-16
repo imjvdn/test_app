@@ -57,7 +57,7 @@
               Welcome, <%= current_user.username %>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to 'Profile', '#', class: 'dropdown-item' %>
+              <%= link_to 'Profile', profile_path, class: 'dropdown-item' %>
               <%= link_to 'Sign out', logout_path, method: :delete, class: 'dropdown-item', data: { confirm: 'Are you sure you want to log out?' } %>
             </div>
           </li>

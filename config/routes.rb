@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   # Pages
   get 'about', to: 'pages#about'
 
+  get 'profile', to: 'users#profile'
+
   # Sessions
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
