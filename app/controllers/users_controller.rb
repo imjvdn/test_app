@@ -1,19 +1,17 @@
 class UsersController < ApplicationController
+  skip_before_action :require_user, only: [:new, :create] # <-- Added this line
+
   def new
-    # Remove :user_id from the session
-    session.delete(:user_id)
     @user = User.new
   end
 
   def create
     @user = User.new(user_params)
     if @user.save
-      # Remove :user_id from the session
-      session.delete(:user_id)
       flash[:notice] = "Account created successfully. You can now log in."
       redirect_to login_path
     else
-      puts @user.errors.full_messages  # Debugging line
+      puts @user.errors.full_messages
       flash.now[:alert] = 'Account creation failed. Please check the form for errors.'
       render :new
     end
@@ -23,10 +21,28 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
+  def settings
+    @user = current_user
+  end
+  
+  def update_settings
+    @user = current_user
+    if @user.update(user_settings_params)
+      flash[:notice] = "Settings updated successfully."
+      redirect_to settings_path
+    else
+      flash.now[:alert] = 'Failed to update settings. Please check the form for errors.'
+      render :settings
+    end
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:username, :email, :password)
   end
-  
+
+  def user_settings_params
+    params.require(:user).permit(:username, :email, :password, :password_confirmation)
+  end
 end

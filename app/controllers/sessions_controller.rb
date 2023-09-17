@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
-  skip_before_action :require_user, only: [:new, :create] # <-- Added this line
-  
+  skip_before_action :require_user, only: [:new, :create]  # <-- Existing code
+
   def new
     # render login form
   end

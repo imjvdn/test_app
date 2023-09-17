@@ -1,11 +1,18 @@
+# config/routes.rb
+
 Rails.application.routes.draw do
-  # Root route (redirect to home page if user is signed in, otherwise redirect to sign-in page)
+  # Root route
   root to: 'pages#home'
 
   # Pages
   get 'about', to: 'pages#about'
 
+  # Profile
   get 'profile', to: 'users#profile'
+
+  # Settings
+  get 'settings', to: 'users#settings', as: :settings
+  patch 'update_settings', to: 'users#update_settings', as: :update_settings  # Changed from post to patch
 
   # Sessions
   get 'login', to: 'sessions#new'
