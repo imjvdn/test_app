@@ -1,3 +1,28 @@
 <!-- app/views/users/profile.html.erb -->
-<h1>Your Profile</h1>
-<p>Username: <%= @user.username %></p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header">
+          <h1>Your Profile</h1>
+        </div>
+        <div class="card-body">
+          <h2><%= @user.username %>'s Profile</h2>
+          <p>Username: <%= @user.username %></p>
+          
+          <h3>Articles Created by <%= @user.username %></h3>
+          <ul class="list-group">
+            <% @articles.each do |article| %>
+              <li class="list-group-item">
+                <%= link_to article.title, article %>
+                <span class="float-right">
+                  Created on <%= article.created_at.strftime('%B %d, %Y') %>
+                </span>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -19,7 +19,9 @@ class UsersController < ApplicationController
 
   def profile
     @user = current_user
+    @articles = @user.articles
   end
+  
 
   def settings
     @user = current_user
