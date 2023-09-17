@@ -29,6 +29,7 @@ class UsersController < ApplicationController
     @user = current_user
     if @user.update(user_settings_params)
       flash[:notice] = "Settings updated successfully."
+      puts "Flash message set"  # Debugging line
       redirect_to settings_path
     else
       flash.now[:alert] = 'Failed to update settings. Please check the form for errors.'

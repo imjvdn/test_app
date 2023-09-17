@@ -2,9 +2,9 @@ class User < ApplicationRecord
   has_secure_password  # Enables password hashing and authentication
   has_many :articles  # Defines a one-to-many association with articles
 
-  # New fields for settings
-  validates :privacy_setting, inclusion: { in: ['Public', 'Private'], message: 'must be either Public or Private' }
-  validates :notification_preference, inclusion: { in: ['Email', 'In-App'], message: 'must be either Email or In-App' }
+  # # New fields for settings
+  # validates :privacy_setting, inclusion: { in: ['Public', 'Private'], message: 'must be either Public or Private' }
+  # validates :notification_preference, inclusion: { in: ['Email', 'In-App'], message: 'must be either Email or In-App' }
   
   # Existing validations
   validates :email, presence: true, uniqueness: true, length: { minimum: 3, maximum: 50, message: 'must be between 3 and 50 characters' }
